@@ -10,17 +10,13 @@ def fetch_moneycontrol_headlines(limit=5):
     try:
         print("Fetching live data from Moneycontrol...\n")
         
-        # We use a standard User-Agent so the server doesn't block us as a bot
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         with urllib.request.urlopen(req) as response:
             xml_data = response.read()
         
-        # Parse the raw XML data into a readable tree structure
         root = ET.fromstring(xml_data)
-        
         print(f"--- Top {limit} Business Headlines ---")
         
-        # Loop through the XML tree to find the news 'items'
         count = 0
         for item in root.findall('.//item'):
             if count >= limit:
